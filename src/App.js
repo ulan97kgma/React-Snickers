@@ -6,6 +6,7 @@ import Cart from "./components/Cart/Cart";
 import Header from "./components/Header/Header";
 import Favorites from "./pages/Favorites";
 import Home from "./pages/Home";
+import Orders from "./pages/Orders";
 
 export const AppContext = React.createContext({});
 
@@ -100,6 +101,7 @@ function App() {
         onAddToFavorite,
         setCartOpened,
         setCartItems,
+        onAddToCart,
       }}
     >
       <div className="wrapper clear">
@@ -126,6 +128,9 @@ function App() {
         </Route>
         <Route exact path="/favorites">
           <Favorites />
+        </Route>
+        <Route exact path="/orders">
+          <Orders />
         </Route>
       </div>
     </AppContext.Provider>
