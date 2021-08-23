@@ -19,46 +19,72 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchData() {
-      setIsLoading(true);
-      const cartResponse = await axios.get(
-        "https://6121fd70f5849d0017fb4346.mockapi.io/cart"
-      );
-      const favoritesResponse = await axios.get(
-        "https://6121fd70f5849d0017fb4346.mockapi.io/favorites"
-      );
-      const itemsResponse = await axios.get(
-        "https://6121fd70f5849d0017fb4346.mockapi.io/items"
-      );
+    try {
+      async function fetchData() {
+        setIsLoading(true);
+        const cartResponse = await axios.get(
+          "https://6121fd70f5849d0017fb4346.mockapi.io/cart"
+        );
+        const favoritesResponse = await axios.get(
+          "https://6121fd70f5849d0017fb4346.mockapi.io/favorites"
+        );
+        const itemsResponse = await axios.get(
+          "https://6121fd70f5849d0017fb4346.mockapi.io/items"
+        );
 
-      setIsLoading(false);
+        // const [cartResponse, favoritesResponse, itemsResponse] =
+        //   await Promise.all([
+        //     axios.get("https://6121fd70f5849d0017fb4346.mockapi.io/cart"),
+        //     axios.get("https://6121fd70f5849d0017fb4346.mockapi.io/favorites"),
+        //     axios.get("https://6121fd70f5849d0017fb4346.mockapi.io/items"),
+        //   ]);
 
-      setCartItems(cartResponse.data);
-      setFavorites(favoritesResponse.data);
-      setItems(itemsResponse.data);
+        setIsLoading(false);
+
+        setCartItems(cartResponse.data);
+        setFavorites(favoritesResponse.data);
+        setItems(itemsResponse.data);
+      }
+      fetchData();
+    } catch (error) {
+      alert("Ошибка при запросе данных с сервера");
+      console.error(error);
     }
-
-    fetchData();
   }, []);
 
-  const onAddToCart = (obj) => {
-    console.log(obj);
-    if (cartItems.find((item) => Number(item.id) === Number(obj.id))) {
-      axios.delete(
-        `https://6121fd70f5849d0017fb4346.mockapi.io/cart/${obj.id}`
-      );
-      setCartItems((prev) =>
-        prev.filter((item) => Number(item.id) !== Number(obj.id))
-      );
-    } else {
-      axios.post("https://6121fd70f5849d0017fb4346.mockapi.io/cart", obj);
-      setCartItems((prev) => [...prev, obj]);
+  const onAddToCart = async (obj) => {
+    try {
+      // console.log(obj);
+      if (cartItems.find((item) => Number(item.id) === Number(obj.id))) {
+        setCartItems((prev) =>
+          prev.filter((item) => Number(item.id) !== Number(obj.id))
+        );
+        await axios.delete(
+          `https://6121fd70f5849d0017fb4346.mockapi.io/cart/${obj.id}`
+        );
+      } else {
+        setCartItems((prev) => [...prev, obj]);
+        await axios.post(
+          "https://6121fd70f5849d0017fb4346.mockapi.io/cart",
+          obj
+        );
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Ошибка при добавлении в корзину");
     }
   };
 
-  const onDeleteProductInCart = (id) => {
-    axios.delete(`https://6121fd70f5849d0017fb4346.mockapi.io/cart/${id}`);
-    setCartItems((prev) => prev.filter((item) => item.id !== id));
+  const onDeleteProductInCart = async (id) => {
+    try {
+      await axios.delete(
+        `https://6121fd70f5849d0017fb4346.mockapi.io/cart/${id}`
+      );
+      setCartItems((prev) => prev.filter((item) => item.id !== id));
+    } catch (error) {
+      alert("Ошибка при удалении из корзины");
+      console.error(error);
+    }
   };
 
   const onChangeSearchInput = (event) => {
@@ -84,6 +110,7 @@ function App() {
       }
     } catch (error) {
       alert("Не удалось добавить в избранное");
+      console.error(error);
     }
   };
 
@@ -105,13 +132,14 @@ function App() {
       }}
     >
       <div className="wrapper clear">
-        {cartOpened && (
+        <div>
           <Cart
             items={cartItems}
             onClose={() => setCartOpened(false)}
             onDeleteProductInCart={onDeleteProductInCart}
+            opened={cartOpened}
           />
-        )}
+        </div>
         <Header onClickCart={() => setCartOpened(true)} />
 
         <Route exact path="/">

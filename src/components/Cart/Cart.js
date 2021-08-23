@@ -1,12 +1,14 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useCart } from "../../hooks/useCart";
 
+import { useCart } from "../../hooks/useCart";
 import Info from "../Info/Info";
+
+import cartStyle from "./Cart.module.scss";
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-function Cart({ onClose, onDeleteProductInCart, items = [] }) {
+function Cart({ onClose, onDeleteProductInCart, items = [], opened }) {
   const { cartItems, setCartItems, totalPrice } = useCart();
   const [orderId, setOrderId] = useState(null);
   const [isOrderCompleted, setIsOrderCompleted] = useState(false);
@@ -35,13 +37,18 @@ function Cart({ onClose, onDeleteProductInCart, items = [] }) {
       }
     } catch (error) {
       alert("Ошибка при создании заказа :'(");
+      console.error(error);
     }
     setIsLoading(false);
   };
 
   return (
-    <div className="overlay">
-      <div className="drawer">
+    <div
+      className={`${cartStyle.overlay} ${
+        opened ? cartStyle.overlayVisible : ""
+      }`}
+    >
+      <div className={cartStyle.drawer}>
         <h2 className="d-flex justify-between mb-30">
           Корзина
           <img
