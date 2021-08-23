@@ -60,8 +60,8 @@ function Cart({ onClose, onDeleteProductInCart, items = [], opened }) {
         </h2>
 
         {items.length > 0 ? (
-          <>
-            <div className="items">
+          <div className="d-flex flex-column flex">
+            <div className="items flex">
               {items.map((obj) => (
                 <div
                   key={obj.id}
@@ -105,7 +105,7 @@ function Cart({ onClose, onDeleteProductInCart, items = [], opened }) {
                 Оформить заказ <img src="/img/arrow.svg" alt="Arrow" />
               </button>
             </div>
-          </>
+          </div>
         ) : (
           <Info
             title={isOrderCompleted ? "Заказ оформлен!" : "Корзина пустая"}

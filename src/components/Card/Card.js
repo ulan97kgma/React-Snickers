@@ -5,6 +5,7 @@ import cardStyle from "./Card.module.scss";
 
 function Card({
   id,
+
   title,
   imageUrl,
   price,
@@ -15,9 +16,10 @@ function Card({
 }) {
   const { hasItemInCart } = useContext(AppContext);
   const [isFavorite, setIsFavorite] = useState(favorited);
+  const obj = { id, parentId: id, title, imageUrl, price };
 
   const onClickPlus = () => {
-    onPlus({ id, title, imageUrl, price });
+    onPlus(obj);
   };
 
   const onClickFavorite = () => {
