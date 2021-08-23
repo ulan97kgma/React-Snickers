@@ -1,12 +1,13 @@
 import axios from "axios";
-import React, { useContext, useState } from "react";
-import { AppContext } from "../../App";
+import React, { useState } from "react";
+import { useCart } from "../../hooks/useCart";
+
 import Info from "../Info/Info";
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 function Cart({ onClose, onDeleteProductInCart, items = [] }) {
-  const { cartItems, setCartItems } = useContext(AppContext);
+  const { cartItems, setCartItems, totalPrice } = useCart();
   const [orderId, setOrderId] = useState(null);
   const [isOrderCompleted, setIsOrderCompleted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -81,12 +82,12 @@ function Cart({ onClose, onDeleteProductInCart, items = [] }) {
                 <li>
                   <span>Итого:</span>
                   <div></div>
-                  <b>21 498 сом </b>
+                  <b>{totalPrice} сом </b>
                 </li>
                 <li>
-                  <span>Налог 5%:</span>
+                  <span>В т.ч. НДС/НСП 5%:</span>
                   <div></div>
-                  <b>1074 сом</b>
+                  <b>{Math.ceil((totalPrice / 100) * 5)} сом</b>
                 </li>
               </ul>
               <button
