@@ -99,6 +99,7 @@ function App() {
         hasItemInCart,
         onAddToFavorite,
         setCartOpened,
+        setCartItems,
       }}
     >
       <div className="wrapper clear">

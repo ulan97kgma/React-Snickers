@@ -1,7 +1,43 @@
-import React from "react";
+import axios from "axios";
+import React, { useContext, useState } from "react";
+import { AppContext } from "../../App";
 import Info from "../Info/Info";
 
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 function Cart({ onClose, onDeleteProductInCart, items = [] }) {
+  const { cartItems, setCartItems } = useContext(AppContext);
+  const [orderId, setOrderId] = useState(null);
+  const [isOrderCompleted, setIsOrderCompleted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const onClickOrder = async () => {
+    try {
+      setIsLoading(true);
+      const { data } = await axios.post(
+        "https://6121fd70f5849d0017fb4346.mockapi.io/orders",
+        {
+          items: cartItems,
+        }
+      );
+
+      setOrderId(data.id);
+      setIsOrderCompleted(true);
+      setCartItems([]);
+      //на mockapi нет метода patch
+      for (let index = 0; index < cartItems.length; index++) {
+        const item = cartItems[index];
+        await axios.delete(
+          "https://6121fd70f5849d0017fb4346.mockapi.io/cart/" + item.id
+        );
+        await delay(1000);
+      }
+    } catch (error) {
+      alert("Ошибка при создании заказа :'(");
+    }
+    setIsLoading(false);
+  };
+
   return (
     <div className="overlay">
       <div className="drawer">
@@ -53,16 +89,28 @@ function Cart({ onClose, onDeleteProductInCart, items = [] }) {
                   <b>1074 сом</b>
                 </li>
               </ul>
-              <button className="greenButton">
+              <button
+                disabled={isLoading}
+                onClick={onClickOrder}
+                className="greenButton"
+              >
                 Оформить заказ <img src="/img/arrow.svg" alt="Arrow" />
               </button>
             </div>
           </>
         ) : (
           <Info
-            title="Корзина пустая"
-            description="Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ."
-            image="/img/empty-cart.jpg"
+            title={isOrderCompleted ? "Заказ оформлен!" : "Корзина пустая"}
+            description={
+              isOrderCompleted
+                ? `Ваш заказ #${orderId} скоро будет передан курьерской доставке`
+                : "Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ."
+            }
+            image={
+              isOrderCompleted
+                ? "/img/completeOrder.jpg"
+                : "/img/empty-cart.jpg"
+            }
           />
         )}
       </div>
