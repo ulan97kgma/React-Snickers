@@ -5,7 +5,6 @@ import cardStyle from "./Card.module.scss";
 
 function Card({
   id,
-
   title,
   imageUrl,
   price,
