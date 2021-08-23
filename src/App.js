@@ -92,7 +92,14 @@ function App() {
 
   return (
     <AppContext.Provider
-      value={{ items, cartItems, favorites, hasItemInCart, onAddToFavorite }}
+      value={{
+        items,
+        cartItems,
+        favorites,
+        hasItemInCart,
+        onAddToFavorite,
+        setCartOpened,
+      }}
     >
       <div className="wrapper clear">
         {cartOpened && (

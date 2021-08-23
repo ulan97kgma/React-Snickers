@@ -1,4 +1,5 @@
 import React from "react";
+import Info from "../Info/Info";
 
 function Cart({ onClose, onDeleteProductInCart, items = [] }) {
   return (
@@ -58,23 +59,11 @@ function Cart({ onClose, onDeleteProductInCart, items = [] }) {
             </div>
           </>
         ) : (
-          <div className="cartEmpty d-flex align-center justify-center flex-column flex">
-            <img
-              className="mb-20"
-              width={120}
-              height={120}
-              src="/img/empty-cart.jpg"
-              alt="Empty Cart"
-            />
-            <h2>Корзина пустая</h2>
-            <p className="opacity-6">
-              Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ.
-            </p>
-            <button onClick={onClose} className="greenButton">
-              <img src="/img/arrow.svg" alt="Arrow" />
-              Вернуться назад
-            </button>
-          </div>
+          <Info
+            title="Корзина пустая"
+            description="Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ."
+            image="/img/empty-cart.jpg"
+          />
         )}
       </div>
     </div>
