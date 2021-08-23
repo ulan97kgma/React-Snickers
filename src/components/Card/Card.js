@@ -1,22 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import cardStyle from "./Card.module.scss";
 
-function Card(props) {
+function Card({
+  id,
+  title,
+  imageUrl,
+  price,
+  onFavorite,
+  onPlus,
+  favorited = false,
+}) {
+  const [isAdded, setIsAdded] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(favorited);
+
+  const onClickPlus = () => {
+    onPlus({ title, imageUrl, price });
+    setIsAdded(!isAdded);
+  };
+
+  const onClickFavorite = () => {
+    onFavorite({ title, imageUrl, price, id });
+    setIsFavorite(!isFavorite);
+  };
+
   return (
     <div className={cardStyle.card}>
-      <div className="favorite">
-        <img src="/img/heart-unliked.svg" alt="Unliked" />
+      <div className={cardStyle.favorite} onClick={onClickFavorite}>
+        <img
+          src={isFavorite ? "/img/heart-liked.svg" : "/img/heart-unliked.svg"}
+          alt="Heart"
+        />
       </div>
-      <img width={133} height={112} src={props.image} alt="Sneakers" />
-      <h5>{props.title}</h5>
+      <img width={133} height={112} src={imageUrl} alt="Sneakers" />
+      <h5>{title}</h5>
       <div className="d-flex justify-between align-center">
         <div className="d-flex flex-column">
           <span>Цена:</span>
-          <b>{props.price} сом</b>
+          <b>{price} сом</b>
         </div>
-        <button className="button">
-          <img width={11} height={11} src="/img/plus.svg" alt="Plus" />
-        </button>
+        <img
+          className={cardStyle.plus}
+          onClick={onClickPlus}
+          src={isAdded ? "/img/btn-checked.svg" : "/img/btn-plus.svg"}
+          alt="Plus"
+        />
       </div>
     </div>
   );
