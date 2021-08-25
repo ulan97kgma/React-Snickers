@@ -54,7 +54,7 @@ function Cart({ onClose, onDeleteProductInCart, items = [], opened }) {
           <img
             onClick={onClose}
             className="removeBtn cu-p"
-            src="img/btn-remove.svg"
+            src="/img/btn-remove.svg"
             alt="Close"
           />
         </h2>
@@ -78,7 +78,7 @@ function Cart({ onClose, onDeleteProductInCart, items = [], opened }) {
                   <img
                     onClick={() => onDeleteProductInCart(obj.id)}
                     className="removeBtn"
-                    src="img/btn-remove.svg"
+                    src="/img/btn-remove.svg"
                     alt="Remove"
                   />
                 </div>
@@ -102,7 +102,7 @@ function Cart({ onClose, onDeleteProductInCart, items = [], opened }) {
                 onClick={onClickOrder}
                 className="greenButton"
               >
-                Оформить заказ <img src="img/arrow.svg" alt="Arrow" />
+                Оформить заказ <img src="/img/arrow.svg" alt="Arrow" />
               </button>
             </div>
           </div>
@@ -115,7 +115,9 @@ function Cart({ onClose, onDeleteProductInCart, items = [], opened }) {
                 : "Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ."
             }
             image={
-              isOrderCompleted ? "img/completeOrder.jpg" : "img/empty-cart.jpg"
+              isOrderCompleted
+                ? "/img/completeOrder.jpg"
+                : "/img/empty-cart.jpg"
             }
           />
         )}

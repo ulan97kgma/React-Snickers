@@ -9,6 +9,15 @@
 
   .plus {
     cursor: pointer;
+    width: 20px;
+    height: 20px;
+  }
+
+  .edit {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    opacity: 0.5;
   }
 
   &:hover {

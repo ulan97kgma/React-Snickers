@@ -13,7 +13,7 @@ function Card({
   favorited = false,
   loading = false,
 }) {
-  const { hasItemInCart } = useContext(AppContext);
+  const { hasItemInCart, handleEdit, deleteProduct } = useContext(AppContext);
   const [isFavorite, setIsFavorite] = useState(favorited);
   const obj = { id, parentId: id, title, imageUrl, price };
 
@@ -49,25 +49,37 @@ function Card({
             <div className={cardStyle.favorite} onClick={onClickFavorite}>
               <img
                 src={
-                  isFavorite ? "img/heart-liked.svg" : "img/heart-unliked.svg"
+                  isFavorite ? "/img/heart-liked.svg" : "/img/heart-unliked.svg"
                 }
                 alt="Heart"
               />
             </div>
           )}
-          <img width={133} height={112} src={imageUrl} alt="Sneakers" />
+          <img width={120} height={140} src={imageUrl} alt="Guitar" />
           <h5>{title}</h5>
           <div className="d-flex justify-between align-center">
             <div className="d-flex flex-column">
               <span>Цена:</span>
               <b>{price} сом</b>
             </div>
+
+            <img
+              onClick={() => handleEdit(id)}
+              className={cardStyle.edit}
+              src="/img/edit.svg"
+              alt="Edit"
+            />
+            <img
+              className={cardStyle.edit}
+              src="/img/delete.svg"
+              onClick={() => deleteProduct(id)}
+            />
             {onPlus && (
               <img
                 className={cardStyle.plus}
                 onClick={onClickPlus}
                 src={
-                  hasItemInCart(id) ? "img/btn-checked.svg" : "img/btn-plus.svg"
+                  hasItemInCart(id) ? "/img/btn-checked.svg" : "/img/cart.svg"
                 }
                 alt="Plus"
               />
