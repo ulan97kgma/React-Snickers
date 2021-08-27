@@ -29,10 +29,10 @@ function Home({
     <div className="content p-40">
       <div className="d-flex align-center mb-40 justify-between">
         <h1>
-          {searchValue ? `Поиск по запросу: "${searchValue}"` : "Все кроссовки"}
+          {searchValue ? `Поиск по запросу: "${searchValue}"` : "Все гитары"}
         </h1>
         <div className="search-block d-flex">
-          <img src="/img/search.svg" alt="Search" />
+          <img src="img/search.svg" alt="Search" />
           <input
             onChange={onChangeSearchInput}
             value={searchValue}
@@ -42,7 +42,7 @@ function Home({
             <img
               onClick={() => setSearchValue("")}
               className="removeBtn cu-p clear"
-              src="/img/btn-remove.svg"
+              src="img/btn-remove.svg"
               alt="Clear"
             />
           )}

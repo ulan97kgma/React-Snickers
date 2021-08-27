@@ -183,6 +183,57 @@ header {
   }
 }
 
+.redButton {
+  width: 100%;
+  height: 55px;
+  background: #eb1515;
+  border-radius: 18px;
+  border: 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.1s ease-in-out;
+  box-sizing: border-box;
+  &:hover {
+    background: lighten($color: #db3e32, $amount: 10%);
+  }
+  &:active {
+    background: darken($color: #eb1515, $amount: 10%);
+  }
+}
+
+.adminPanelForm {
+  border: 0.5px solid #bebebe;
+  border-radius: 15px;
+  width: 35vw;
+}
+
+.empty {
+  .greenButton {
+    width: 245px;
+    margin-top: 20px;
+
+    &:hover {
+      img {
+        transform: translateX(-8px);
+      }
+    }
+    img {
+      transition: transform 0.15s ease-in-out;
+      margin-right: 7px;
+    }
+  }
+}
+
+.inputNumber {
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
 @keyframes button-loading {
   0% {
     opacity: 1;
