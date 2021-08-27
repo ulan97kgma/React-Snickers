@@ -7,27 +7,11 @@ import Header from "./components/Header/Header";
 import Favorites from "./pages/Favorites";
 import Home from "./pages/Home";
 import Orders from "./pages/Orders";
-import Login from "./components/Auth/Login";
 import Add from "./AdminPanel/Add";
 import Edit from "./AdminPanel/Edit";
+import CardDetail from "./pages/CardDetail/CardDetail";
 
 export const AppContext = React.createContext({});
-
-// const INIT_STATE = {
-//   products: null,
-//   productToEdit: null,
-// };
-
-// const reducer = (state = INIT_STATE, action) => {
-//   switch (action.type) {
-//     case "GET_PRODUCTS":
-//       return { ...state, products: action.payload };
-//     case "GET_PRODUCT_TO_EDIT":
-//       return { ...state, productToEdit: action.playload };
-//     default:
-//       return state;
-//   }
-// };
 
 function App() {
   const [items, setItems] = useState([]);
@@ -253,14 +237,14 @@ function App() {
         <Route exact path="/orders">
           <Orders />
         </Route>
-        <Route exact path="/login">
-          <Login />
-        </Route>
         <Route exact path="/add">
           <Add />
         </Route>
         <Route exact path="/edit">
           <Edit />
+        </Route>
+        <Route exact path="/detail">
+          <CardDetail />
         </Route>
       </div>
     </AppContext.Provider>

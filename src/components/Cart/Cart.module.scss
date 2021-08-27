@@ -15,6 +15,7 @@
 .overlayVisible {
   visibility: visible;
   opacity: 1;
+  overflow: hidden;
 
   .drawer {
     transform: translateX(0);
@@ -24,7 +25,7 @@
 .drawer {
   display: flex;
   flex-direction: column;
-  position: fixed;
+  position: absolute;
   width: 420px;
   height: 100%;
   right: 0;
@@ -42,6 +43,5 @@
 
   h2 {
     margin: 0;
-    font-size: 24px;
   }
 }

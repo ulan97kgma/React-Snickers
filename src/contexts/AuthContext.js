@@ -1,7 +1,13 @@
-import React, { useEffect, useState } from "react";
-import fire from "../../fire";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import fire from "../../src/firebase/fire";
 
-const Regist = () => {
+export const authContext = createContext();
+
+export const useAuth = () => {
+  return useContext(authContext);
+};
+
+const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,13 +19,12 @@ const Regist = () => {
     setEmail("");
     setPassword("");
   };
-
   const clearErrors = () => {
     setEmailError("");
     setPasswordError("");
   };
 
-  const handleLogin = () => {
+  const handleLogIn = () => {
     clearErrors();
     fire
       .auth()
@@ -38,9 +43,8 @@ const Regist = () => {
       });
   };
 
-  const handleSignUp = () => {
+  const handleSignup = () => {
     clearErrors();
-    console.log("sign up");
     fire
       .auth()
       .createUserWithEmailAndPassword(email, password)
@@ -55,10 +59,16 @@ const Regist = () => {
             break;
         }
       });
+    console.log(email);
+    console.log(password);
+  };
+
+  const handleLogout = () => {
+    fire.auth().signOut();
   };
 
   const authListener = () => {
-    return fire.auth().onAuthStateChanged((user) => {
+    fire.auth().onAuthStateChanged((user) => {
       if (user) {
         clearInputs();
         setUser(user);
@@ -67,34 +77,35 @@ const Regist = () => {
       }
     });
   };
-
   useEffect(() => {
-    const unsubscribe = authListener();
-
-    return () => {
-      unsubscribe();
-    };
+    authListener();
   }, []);
+
+  function resetPassword(email) {
+    const auth = fire.auth();
+    return auth.sendPasswordResetEmail(email);
+  }
 
   const values = {
     email,
+    user,
+    handleLogout,
     setEmail,
     password,
     setPassword,
-    emailError,
-    handleSignUp,
-    passwordError,
-    handleLogin,
+    handleLogIn,
+    handleSignup,
     hasAccount,
     setHasAccount,
-    user,
+    emailError,
+    passwordError,
+
+    resetPassword,
   };
 
   return (
-    <div>
-      <Login value={values} />
-    </div>
+    <authContext.Provider value={values}> {children}</authContext.Provider>
   );
 };
 
-export default Regist;
+export default AuthContextProvider;

@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../../hooks/useCart";
 
 function Header(props) {
   const { totalPrice } = useCart();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
     <header className="d-flex justify-between align-center p-40">
@@ -46,6 +47,18 @@ function Header(props) {
         </li>
         <li>
           <Link to="/orders">
+            <img
+              className="mr-30 cu-p"
+              width={18}
+              height={18}
+              style={{ opacity: "0.5" }}
+              src="/img/history.svg"
+              alt="User"
+            />
+          </Link>
+        </li>
+        <li>
+          <Link to="/">
             <img
               className="mr-30 cu-p"
               width={18}

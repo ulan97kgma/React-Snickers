@@ -28,7 +28,6 @@ function Orders() {
           <div className="d-flex align-center mb-40 justify-between">
             <h1>Мои заказы</h1>
           </div>
-
           <div className="d-flex flex-wrap">
             {(isLoading ? [...Array(8)] : orders).map((item, index) => (
               <Card key={index} loading={isLoading} {...item} />
@@ -44,6 +43,7 @@ function Orders() {
             <img src="/img/emoji2.png" alt="Emoji2" height={70} width={70} />
           </div>
           <h2>У вас пока нет заказов</h2>
+          {console.log(orders)}
           <p style={{ opacity: "0.5" }}>Оформите хотя бы один заказ</p>
         </div>
       )}

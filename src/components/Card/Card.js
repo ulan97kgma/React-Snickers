@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import ContentLoader from "react-content-loader";
+import { Link } from "react-router-dom";
 import { AppContext } from "../../App";
 import cardStyle from "./Card.module.scss";
 
@@ -48,6 +49,8 @@ function Card({
           {onFavorite && (
             <div className={cardStyle.favorite} onClick={onClickFavorite}>
               <img
+                width={20}
+                height={20}
                 src={
                   isFavorite ? "/img/heart-liked.svg" : "/img/heart-unliked.svg"
                 }
@@ -55,7 +58,15 @@ function Card({
               />
             </div>
           )}
-          <img width={120} height={140} src={imageUrl} alt="Guitar" />
+          <Link to="/detail">
+            <img
+              className="imageUrl"
+              width={125}
+              height={120}
+              src={imageUrl}
+              alt="Guitar"
+            />
+          </Link>
           <h5>{title}</h5>
           <div className="d-flex justify-between align-center">
             <div className="d-flex flex-column">
